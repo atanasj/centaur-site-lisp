@@ -342,82 +342,8 @@
 ;; key binding
 (define-key ess-mode-map (kbd "C-c r") 'ess-eval-word)
 
-
-
-;; ===========================================================
-;; Evil keybindings
-;; ===========================================================
-
-;; :major-modes
-(general-define-key
- :keymaps 'ess-r-mode-map
- :major-modes t
- :states '(normal insert emacs)
- :prefix "SPC"
- :non-normal-prefix "M-SPC"
- ;; "'"  'spacemacs/ess-start-repl
- ;; "si" 'spacemacs/ess-start-repl
- ;; noweb
- "c" '(:ignore t :which-key "R-noweb")
- "cC" 'ess-eval-chunk-and-go
- "cc" 'ess-eval-chunk
- "cd" 'ess-eval-chunk-and-step
- "cm" 'ess-noweb-mark-chunk
- "cN" 'ess-noweb-previous-chunk
- "cn" 'ess-noweb-next-chunk
- ;; REPL
- "s" '(:ignore t :wk "R-repl")
- "sB" 'ess-eval-buffer-and-go
- "sb" 'ess-eval-buffer
- "e" 'ess-eval-paragraph-and-step
- "f" 'ess-eval-function
- "i" 'ess-interrupt
- "o"  'ess-eval-word
- "R" 'ess-eval-region
- "sp" 'ess-eval-paragraph-and-step
- "sd" 'ess-eval-region-or-line-and-step
- "sl" 'ess-eval-line
- "sr" 'ess-eval-region
- "st" 'ess-eval-function
- "sw" 'ess-set-working-directory
- ;; R data viewers
- ;; "vs" 'df-sample-small
- ;; "vm" 'df-sample-medium
- ;; "vl" 'df-sample-large
- ;; Package Dev helpers
- "d" '(:ignore t :wk "R-devtools")
- "di" 'ess-r-devtools-install-package
- "dt" 'ess-r-devtools-test-package
- "dl" 'ess-r-devtools-load-package
- "dc" 'ess-r-devtools-check-package
- "dd" 'ess-r-devtools-document-package
- "df" 'ess-roxy-update-entry
- "ds" 'tide-devtools-setup
- ;; R help
- "h" '(:ignore t :wk "R-help")
- "ho" 'ess-display-help-on-object
- "hi" 'ess-display-index
- "ha" 'ess-display-help-apropos
- ;; Graphics devices
- "g" '(:ignore t :wk "R-graphics")
- "gn" 'tide-new-gdev
- "gc" 'tide-cur-gdev
- "gs" 'tide-switch-to-gdev
- "gl" 'tide-list-all-gdev
- "gp" 'tide-save-gdev-pdf
- "gc" 'tide-capture-gdev
- "gj" 'tide-switch-next-gdev
- "gk" 'tide-switch-prev-gdev
- ;; R Markdown
- "rc" 'aj/r-insert-chunk
- ;; "rr" 'tide-rmd-rend
- ;; "rd" 'tide-draft-rmd
- ;; Shiny
- "Sr" 'tide-shiny-run-app
- )
-
 ;; provide ess configuration
 (provide 'init-ess)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-package.el ends here
+;;; init-ess.el ends here

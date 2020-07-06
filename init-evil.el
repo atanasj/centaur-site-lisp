@@ -230,11 +230,88 @@
   "; ;" 'eval-last-sexp
   "; :" 'align-regexp
   "; %" 'replace-regexp
-  "y"   'counsel-yank-pop
+  "p"   'counsel-yank-pop
   "."   'counsel-imenu
-  ","   'ivy-switch-buffer)
+  ","   'ivy-switch-buffer
+  "s"   'save-buffer
+  "o"   'ace-window
+  )
+
+;; ===========================================================
+;; ESS Evil keybindings
+;; ===========================================================
+
+;; :major-modes
+(general-define-key
+ :keymaps 'ess-r-mode-map
+ :major-modes t
+ :states '(normal insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "M-SPC"
+ ;; "'"  'spacemacs/ess-start-repl
+ ;; "si" 'spacemacs/ess-start-repl
+ ;; noweb
+ "c" '(:ignore t :which-key "R-noweb")
+ "cC" 'ess-eval-chunk-and-go
+ "cc" 'ess-eval-chunk
+ "cd" 'ess-eval-chunk-and-step
+ "cm" 'ess-noweb-mark-chunk
+ "cN" 'ess-noweb-previous-chunk
+ "cn" 'ess-noweb-next-chunk
+ ;; REPL
+ "s" '(:ignore t :wk "R-repl")
+ "sB" 'ess-eval-buffer-and-go
+ "sb" 'ess-eval-buffer
+ "e" 'ess-eval-paragraph-and-step
+ "f" 'ess-eval-function
+ "i" 'ess-interrupt
+ "o"  'ess-eval-word
+ "R" 'ess-eval-region
+ "sp" 'ess-eval-paragraph-and-step
+ "sd" 'ess-eval-region-or-line-and-step
+ "sl" 'ess-eval-line
+ "sr" 'ess-eval-region
+ "st" 'ess-eval-function
+ "sw" 'ess-set-working-directory
+ ;; R data viewers
+ ;; "vs" 'df-sample-small
+ ;; "vm" 'df-sample-medium
+ ;; "vl" 'df-sample-large
+ ;; Package Dev helpers
+ "d" '(:ignore t :wk "R-devtools")
+ "di" 'ess-r-devtools-install-package
+ "dt" 'ess-r-devtools-test-package
+ "dl" 'ess-r-devtools-load-package
+ "dc" 'ess-r-devtools-check-package
+ "dd" 'ess-r-devtools-document-package
+ "df" 'ess-roxy-update-entry
+ "ds" 'tide-devtools-setup
+ ;; R help
+ "h" '(:ignore t :wk "R-help")
+ "ho" 'ess-display-help-on-object
+ "hi" 'ess-display-index
+ "ha" 'ess-display-help-apropos
+ ;; Graphics devices
+ "g" '(:ignore t :wk "R-graphics")
+ "gn" 'tide-new-gdev
+ "gc" 'tide-cur-gdev
+ "gs" 'tide-switch-to-gdev
+ "gl" 'tide-list-all-gdev
+ "gp" 'tide-save-gdev-pdf
+ "gc" 'tide-capture-gdev
+ "gj" 'tide-switch-next-gdev
+ "gk" 'tide-switch-prev-gdev
+ ;; R Markdown
+ "rc" 'aj/r-insert-chunk
+ ;; "rr" 'tide-rmd-rend
+ ;; "rd" 'tide-draft-rmd
+ ;; Shiny
+ "Sr" 'tide-shiny-run-app
+ )
 
 
+
+;; (evil-define-key 'normal 'global (kbd "<leader>s") 'save-buffer
 
 ;; this configuration was inspired by this post
 ;; gwww.reddit.com/r/emacs/comments/9vnfdk/generalel_for_existing_keymaps/
@@ -259,9 +336,7 @@
 ;; "Keymap for \"leader key\" shortcuts.")
 
 ;; (general-nmap
-;;   :prefix "SPC"
-;;   :prefix-map 'my-leader-map
-;;   "," 'ivy-switch-buffer)
+;; "s" 'save-buffer)
 
 ;; ** Evil idit
 
