@@ -3,7 +3,16 @@
 ;; Copyright (C) 2020 Atanas Janackovski
 
 ;; Author: Atanas Janackovski <atanas.atanas@gmail.com>
-;; URL: https://github.com/seagle0128/.emacs.d
+
+;; Note: the evil bindings are taken from the spacemacs, and the actual
+;; configuration is taken from numerous others, including the spacesmacs one,
+;; apologies that I cannot remember them all (if/when I do, I will be sure to
+;; add).
+
+;; spacemacs credit:
+
+;; Author: Sylvain Benner <sylvain.benner@gmail.com>
+;; URL: https://github.com/syl20bnr/spacemacs
 
 ;; This file is not part of GNU Emacs.
 ;;
@@ -401,6 +410,9 @@
  ;; Shiny
  "Sr" 'tide-shiny-run-app
  )
+
+;; this configuration was inspired by this post
+;; gwww.reddit.com/r/emacs/comments/9vnfdk/generalel_for_existing_keymaps/
 
 (general-define-key
  :keymaps 'markdown-mode-map
