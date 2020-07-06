@@ -1,0 +1,6 @@
+# folders to ignore
+./spss-mode/*
+./layers/*
+
+# files to ignore
+.gitkeep
