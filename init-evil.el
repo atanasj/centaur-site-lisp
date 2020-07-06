@@ -164,10 +164,11 @@
   )
 
 (use-package key-chord
-  :ensure key-chord
+  :demand t
   :config
-  (progn
-    (key-chord-mode 1)))
+  (key-chord-mode 1)
+  (setq key-chord-two-keys-delay 0.5)
+  )
 
 (general-evil-setup)
 
@@ -181,13 +182,18 @@
    (save-excursion (skip-syntax-backward "^ ") (point))))
 
 ;; FIXME the below is ot working
-(general-define-key :keymaps 'evil-insert-state-map
-  (general-chord "uu") 'aj/evil-insert-delete-back-word
-  )
+;; ;; (general-define-key :keymaps 'evil-insert-state-map
+;; ;;   (general-chord "uu") 'aj/evil-insert-delete-back-word
+;;   )
+
+;; (key-chord-define evil-insert-state-map "uu" 'aj/evil-insert-delete-back-word)
+;; (general-define-key :keymaps 'evil-insert-state-map
+(general-define-key :states '(insert emacs normal)
+  (general-chord "uu") 'aj/evil-insert-delete-back-word)
 
 ;; more complex example
 (general-create-definer evil-centaur-def
-  :states '(normal insert emacs)
+  :states '(normal insert emacs visual)
   :prefix "SPC"
   :non-normal-prefix "M-SPC"
   :prefix-command 'evil-centaur-prefix-command
@@ -245,71 +251,64 @@
 (general-define-key
  :keymaps 'ess-r-mode-map
  :major-modes t
- :states '(normal insert emacs)
+ :states '(normal insert emacs visual)
  :prefix "SPC"
  :non-normal-prefix "M-SPC"
- ;; "'"  'spacemacs/ess-start-repl
- ;; "si" 'spacemacs/ess-start-repl
  ;; noweb
- "c" '(:ignore t :which-key "R-noweb")
- "cC" 'ess-eval-chunk-and-go
- "cc" 'ess-eval-chunk
- "cd" 'ess-eval-chunk-and-step
- "cm" 'ess-noweb-mark-chunk
- "cN" 'ess-noweb-previous-chunk
- "cn" 'ess-noweb-next-chunk
+ "c"     '(:ignore t :which-key "R-noweb")
+ "cC"    'ess-eval-chunk-and-go
+ "cc"    'ess-eval-chunk
+ "cd"    'ess-eval-chunk-and-step
+ "cm"    'ess-noweb-mark-chunk
+ "cN"    'ess-noweb-previous-chunk
+ "cn"    'ess-noweb-next-chunk
  ;; REPL
- "s" '(:ignore t :wk "R-repl")
- "sB" 'ess-eval-buffer-and-go
- "sb" 'ess-eval-buffer
- "e" 'ess-eval-paragraph-and-step
- "f" 'ess-eval-function
- "i" 'ess-interrupt
- "o"  'ess-eval-word
- "R" 'ess-eval-region
- "sp" 'ess-eval-paragraph-and-step
- "sd" 'ess-eval-region-or-line-and-step
- "sl" 'ess-eval-line
- "sr" 'ess-eval-region
- "st" 'ess-eval-function
- "sw" 'ess-set-working-directory
+ "s"     '(:ignore t :wk "R-repl")
+ "sB"    'ess-eval-buffer-and-go
+ "sb"    'ess-eval-buffer
+ "e"     'ess-eval-paragraph-and-step
+ "f"     'ess-eval-function
+ "i"     'ess-interrupt
+ "o"     'ess-eval-word
+ "R"     'ess-eval-region
+ "sp"    'ess-eval-paragraph-and-step
+ "sd"    'ess-eval-region-or-line-and-step
+ "sl"    'ess-eval-line
+ "sr"    'ess-eval-region
+ "st"    'ess-eval-function
+ "sw"    'ess-set-working-directory
  ;; R data viewers
- ;; "vs" 'df-sample-small
- ;; "vm" 'df-sample-medium
- ;; "vl" 'df-sample-large
- ;; Package Dev helpers
- "d" '(:ignore t :wk "R-devtools")
- "di" 'ess-r-devtools-install-package
- "dt" 'ess-r-devtools-test-package
- "dl" 'ess-r-devtools-load-package
- "dc" 'ess-r-devtools-check-package
- "dd" 'ess-r-devtools-document-package
- "df" 'ess-roxy-update-entry
- "ds" 'tide-devtools-setup
+ "v"     'ess-view-inspect-df
+ "d"     '(:ignore t :wk "R-devtools")
+ "di"    'ess-r-devtools-install-package
+ "dt"    'ess-r-devtools-test-package
+ "dl"    'ess-r-devtools-load-package
+ "dc"    'ess-r-devtools-check-package
+ "dd"    'ess-r-devtools-document-package
+ "df"    'ess-roxy-update-entry
+ "ds"    'ess-cent-devtools-setup
  ;; R help
- "h" '(:ignore t :wk "R-help")
- "ho" 'ess-display-help-on-object
- "hi" 'ess-display-index
- "ha" 'ess-display-help-apropos
+ "h"     '(:ignore t :wk "R-help")
+ "ho"    'ess-display-help-on-object
+ "hi"    'ess-display-index
+ "ha"    'ess-display-help-apropos
  ;; Graphics devices
- "g" '(:ignore t :wk "R-graphics")
- "gn" 'tide-new-gdev
- "gc" 'tide-cur-gdev
- "gs" 'tide-switch-to-gdev
- "gl" 'tide-list-all-gdev
- "gp" 'tide-save-gdev-pdf
- "gc" 'tide-capture-gdev
- "gj" 'tide-switch-next-gdev
- "gk" 'tide-switch-prev-gdev
+ "g"     '(:ignore t :wk "R-graphics")
+ "gn"    'ess-cent-new-gdev
+ "gc"    'ess-cent-cur-gdev
+ "gs"    'ess-cent-switch-to-gdev
+ "gl"    'ess-cent-list-all-gdev
+ "gp"    'ess-cent-save-gdev-pdf
+ "gc"    'ess-cent-capture-gdev
+ "gj"    'ess-cent-switch-next-gdev
+ "gk"    'ess-cent-switch-prev-gdev
  ;; R Markdown
- "rc" 'aj/r-insert-chunk
- ;; "rr" 'tide-rmd-rend
- ;; "rd" 'tide-draft-rmd
+ "rc"    'ess-cent-r-insert-chunk
+ ;; "rr" 'ess-cent-rmd-rend
+ ;; "rd" 'ess-cent-draft-rmd
  ;; Shiny
- "Sr" 'tide-shiny-run-app
+ "Sr"    'ess-cent-shiny-run-app
  )
-
-
 
 ;; (evil-define-key 'normal 'global (kbd "<leader>s") 'save-buffer
 

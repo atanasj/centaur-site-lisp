@@ -52,17 +52,11 @@
   :defer t
   :init
   (require 'ess-site)
-  ;; (require 'ess-view)
-  ;; (require 'ess-R-data-view)
-  ;; (require 'poly-R)
   :config
-  ;; (setq ess-set-style 'RStudio) ; allow lsp-mode to control
   ;; auto-width
   (setq ess-auto-width 'window)
   ;; let lsp manage lintr
   (setq ess-use-flymake nil)
-  ;; Toggle underscore off no replacement of _ for assign
-  (setq ess-smart-S-assign-key nil)
   ;; Stop R repl eval from blocking emacs.
   (setq ess-eval-visibly 'nowait)
 
@@ -73,25 +67,25 @@
         comint-scroll-to-bottom-on-output t
         comint-move-point-for-output t)
   ;; insert pipes etc...
-  (defun tide-insert-assign ()
+  (defun ess-cent-insert-assign ()
     "Insert an assignment <-"
     (interactive)
     (insert " <- "))
-  (defun tide-insert-pipe ()
+  (defun ess-cent-insert-pipe ()
     "Insert a %>% and newline"
     (interactive)
     (insert " %>% "))
-  (defun tide-insert-assign ()
+  (defun ess-cent-insert-assign ()
     "Insert an assignment <-"
     (interactive)
     (insert " <- "))
   ;; set keybindings
   ;; insert pipe
-  (define-key ess-r-mode-map (kbd "M-s-'") 'tide-insert-assign)
-  (define-key inferior-ess-r-mode-map (kbd "M-s-'") 'tide-insert-assign)
+  (define-key ess-r-mode-map (kbd "M-s-'") 'ess-cent-insert-assign)
+  (define-key inferior-ess-r-mode-map (kbd "M-s-'") 'ess-cent-insert-assign)
   ;; insert assign
-  (define-key ess-r-mode-map (kbd "M-s-\"") 'tide-insert-pipe)
-  (define-key inferior-ess-r-mode-map (kbd "M-s-\"") 'tide-insert-pipe)
+  (define-key ess-r-mode-map (kbd "M-s-\"") 'ess-cent-insert-pipe)
+  (define-key inferior-ess-r-mode-map (kbd "M-s-\"") 'ess-cent-insert-pipe)
   )
 
 ;; ess-view
@@ -124,43 +118,6 @@
    )
   )
 
-;; Insert new chunk for Rmarkdown
-(defun aj/r-insert-chunk (header)
-  "Insert an r-chunk in markdown mode."
-  (interactive "sLabel: ")
-  (insert (concat "```{r " header "}\n\n```"))
-  (forward-line -1))
-
-(global-set-key (kbd "C-c M-i") 'aj/r-insert-chunk)
-
-;; Bring up empty R script and R console for quick calculations
-(defun aj/R-scratch ()
-  (interactive)
-  (progn
-    (delete-other-windows)
-    (setq new-buf (get-buffer-create "scratch.R"))
-    (switch-to-buffer new-buf)
-    (R-mode)
-    (setq w1 (selected-window))
-    (setq w1name (buffer-name))
-    (setq w2 (split-window w1 nil t))
-    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
-        (R))
-    (set-window-buffer w2 "*R*")
-    (set-window-buffer w1 w1name)))
-
-(global-set-key (kbd "C-x 9") 'aj/R-scratch)
-
-;; Not sure if need this as plymode has something similar
-(defun aj/ess-r-shiny-run-app (&optional arg)
-  "Interface for `shiny::runApp()'. With prefix ARG ask for extra args."
-  (interactive)
-  (inferior-ess-r-force)
-  (ess-eval-linewise
-   "shiny::runApp(\".\")\n" "Running app" arg
-   '("" (read-string "Arguments: " "recompile = TRUE"))))
-
-
 ;; ===========================================================
 ;; Polymode
 ;; ===========================================================
@@ -184,56 +141,51 @@
 ;; ===========================================================
 ;; IDE Functions
 ;; ===========================================================
+;; Bring up empty R script and R console for quick calculations
+(defun ess-cent-R-scratch ()
+  (interactive)
+  (progn
+    (delete-other-windows)
+    (setq new-buf (get-buffer-create "scratch.R"))
+    (switch-to-buffer new-buf)
+    (R-mode)
+    (setq w1 (selected-window))
+    (setq w1name (buffer-name))
+    (setq w2 (split-window w1 nil t))
+    (if (not (member "*R*" (mapcar (function buffer-name) (buffer-list))))
+        (R))
+    (set-window-buffer w2 "*R*")
+    (set-window-buffer w1 w1name)))
 
-;; (defun tide-draft-rmd ()
-;;   "Draft a new Rmd file from a template interactively."
-;;   (interactive)
-;;   (setq rmd-file
-;;         (read-from-minibuffer "Rmd Filename (draft_<date>.Rmd): "
-;;                               nil nil t t
-;;                               (format "draft_%s.Rmd"
-;;                                       (string-trim
-;;                                        (shell-command-to-string "date --iso-8601")))))
-;;   (setq rmd-template
-;;         (read-from-minibuffer
-;;          (format "Draft %s from template (mmmisc/basic): " rmd-file)
-;;          nil nil t t "mmmisc/basic"))
-;;   (symbol-name rmd-template)
-;;   (string-match "\\([^/]+\\)/\\([^/]+\\)"
-;;                 (symbol-name rmd-template))
-;;   (setq template-pkg
-;;         (substring
-;;          (symbol-name rmd-template)
-;;          (match-beginning 1)
-;;          (match-end 1)))
-;;   (setq template-name
-;;         (substring
-;;          (symbol-name rmd-template)
-;;          (match-beginning 2)
-;;          (match-end 2)))
-;;   (message "Drafting using template %s from package %s" template-name template-pkg)
-;;   (ess-eval-linewise
-;;    (format "rmarkdown::draft(file = \"%s\", template = \"%s\",
-;;                 package = \"%s\", edit = FALSE)"
-;;            rmd-file template-name template-pkg))
-;;   )
+(global-set-key (kbd "C-x 9") 'ess-cent-R-scratch)
+
+;; Not sure if need this as plymode has something similar
+(defun ess-cent-shiny-run-app (&optional arg)
+  "Interface for `shiny::runApp()'. With prefix ARG ask for extra args."
+  (interactive)
+  (inferior-ess-r-force)
+  (ess-eval-linewise
+   "shiny::runApp(\".\")\n" "Running app" arg
+   '("" (read-string "Arguments: " "recompile = TRUE"))))
+
+
 ;; Graphics device management ;;
-(defun tide-new-gdev ()
+(defun ess-cent-new-gdev ()
   "create a new graphics device"
   (interactive)
   (ess-eval-linewise "dev.new()"))
 
-(defun tide-cur-gdev ()
+(defun ess-cent-cur-gdev ()
   "return current graphics device"
   (interactive)
   (ess-eval-linewise "dev.cur()"))
 
-(defun tide-list-all-gdev ()
+(defun ess-cent-list-all-gdev ()
   "list all graphics devices"
   (interactive)
   (ess-eval-linewise "dev.list()"))
 
-(defun tide-switch-to-gdev ()
+(defun ess-cent-switch-to-gdev ()
   "Prompt for the number of the graphics device to make current"
   (interactive)
   (setq dev-num
@@ -242,89 +194,45 @@
   (ess-eval-linewise
    (format "dev.set(%s)" dev-num)))
 
-(defun tide-switch-next-gdev ()
+(defun ess-cent-switch-next-gdev ()
   "switch to next available graphics device"
   (interactive)
   (ess-eval-linewise "dev.set(dev.next())"))
 
-(defun tide-switch-prev-gdev ()
+(defun ess-cent-switch-prev-gdev ()
   "switch to previous available graphics device"
   (interactive)
   (ess-eval-linewise "dev.set(dev.prev())"))
 
-(defun tide-save-gdev-pdf ()
+(defun ess-cent-save-gdev-pdf ()
   "Save current graphics device as pdf"
   (interactive)
   (ess-eval-linewise "dev.copy2pdf()"))
 
-(defun tide-capture-gdev ()
+(defun ess-cent-capture-gdev ()
   "Capture current graphics device as image"
   (interactive)
   (ess-eval-linewise "dev.capture()"))
 
 ;; Devtools
-(defun tide-devtools-setup ()
+(defun ess-cent-devtools-setup ()
   "setup R package in current working directory"
   (interactive)
   (ess-eval-linewise "devtools::setup()"))
-
-;; Shiny
-(defun tide-shiny-run-app ()
-  "Run a shiny app in the current working directory"
-  (interactive)
-  (ess-eval-linewise "shiny::runApp()"))
-
-;; ;; Rmarkdowm
-;; (defun tide-rmd-rend ()
-;;   "Render rmarkdown files with an interactive selection prompt"
-;;   (interactive)
-;;   (ess-eval-linewise "mmmisc::rend()"))
-
-;; Data Views
-;; (defun df-at-point-to-buffer (&optional numrows)
-;;   "output a sample of another data.frame to and jump to buffer."
-;;   (let ((object (symbol-at-point))
-;;         (r-process (ess-get-process))
-;;         (r-output-buffer (get-buffer-create "*R-output*"))
-;;         (numrows (or numrows 300)))
-;;     (ess-command
-;;      (format "mmmisc::df_preview(%s, %s)\n" object numrows)
-;;      r-output-buffer nil nil nil r-process)
-;;     (switch-to-buffer-other-window r-output-buffer)
-;;     ))
-
-;; (defun df-sample-small ()
-;;   "Sample and print 30 rows of a data.frame"
-;;   (interactive)
-;;   (df-at-point-to-buffer 30)
-;;   )
-
-;; (defun df-sample-medium ()
-;;   "Sample and print 300 rows of a data.frame"
-;;   (interactive)
-;;   (df-at-point-to-buffer 300)
-;;   )
-
-;; (defun df-sample-large ()
-;;   "Sample and print 3000 rows of a data.frame"
-;;   (interactive)
-;;   (df-at-point-to-buffer 3000)
-;;   )
 
 
 ;;======================================================================
 ;; (R) markdown mode
 ;;======================================================================
 
-;; Insert a new (empty) chunk to R markdown ============================
-;; ;; (defun insert-chunk ()
-;; ;;   "Insert chunk environment Rmd sessions."
-;; ;;   (interactive)
-;; ;;   (insert "```{r}\n\n```")
-;; ;;   (forward-line -1)
-;; ;;   )
-;; ;; ;; key binding
-;; (global-set-key (kbd "C-c i") 'insert-chunk)
+;; Insert new chunk for Rmarkdown
+(defun ess-cent-insert-chunk (header)
+  "Insert an r-chunk in markdown mode."
+  (interactive "sLabel: ")
+  (insert (concat "```{r " header "}\n\n```"))
+  (forward-line -1))
+
+(global-set-key (kbd "C-c M-i") 'ess-cent-insert-chunk)
 
 ;; Mark a word at a point ==============================================
 ;; http://www.emacswiki.org/emacs/ess-edit.el
