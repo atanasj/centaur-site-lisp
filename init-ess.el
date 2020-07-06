@@ -358,6 +358,7 @@
  ;; "'"  'spacemacs/ess-start-repl
  ;; "si" 'spacemacs/ess-start-repl
  ;; noweb
+ "c" '(:ignore t :which-key "R-noweb")
  "cC" 'ess-eval-chunk-and-go
  "cc" 'ess-eval-chunk
  "cd" 'ess-eval-chunk-and-step
@@ -365,6 +366,7 @@
  "cN" 'ess-noweb-previous-chunk
  "cn" 'ess-noweb-next-chunk
  ;; REPL
+ "s" '(:ignore t :wk "R-repl")
  "sB" 'ess-eval-buffer-and-go
  "sb" 'ess-eval-buffer
  "e" 'ess-eval-paragraph-and-step
@@ -383,6 +385,7 @@
  ;; "vm" 'df-sample-medium
  ;; "vl" 'df-sample-large
  ;; Package Dev helpers
+ "d" '(:ignore t :wk "R-devtools")
  "di" 'ess-r-devtools-install-package
  "dt" 'ess-r-devtools-test-package
  "dl" 'ess-r-devtools-load-package
@@ -391,10 +394,12 @@
  "df" 'ess-roxy-update-entry
  "ds" 'tide-devtools-setup
  ;; R help
+ "h" '(:ignore t :wk "R-help")
  "ho" 'ess-display-help-on-object
  "hi" 'ess-display-index
  "ha" 'ess-display-help-apropos
  ;; Graphics devices
+ "g" '(:ignore t :wk "R-graphics")
  "gn" 'tide-new-gdev
  "gc" 'tide-cur-gdev
  "gs" 'tide-switch-to-gdev

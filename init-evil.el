@@ -38,7 +38,7 @@
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
   (setq evil-want-keybinding nil)
   :config
-  (evil-mode 1 )
+  (evil-mode 1)
   (progn
     (setq evil-want-C-u-scroll t)
     (setq evil-want-C-w-in-emacs-state t)
@@ -46,7 +46,7 @@
     (setq evil-magic                'very-magic)
     (setq evil-emacs-state-cursor   '("#51afef" bar))
     (setq evil-normal-state-cursor  '("#bbc2cf" box))
-    (setq evil-insert-state-cursor  '("#ECBE7B" bar))
+    ;; (setq evil-insert-state-cursor  '("#ECBE7B" bar))
     (setq evil-replace-state-cursor '("#cc9393" hbar))
     (setq evil-visual-state-cursor  '("#51afef" hollow))
     (setq evil-want-fine-undo t)
@@ -61,7 +61,7 @@
     (evil-set-initial-state 'diff-mode 'emacs)
     (evil-set-initial-state 'inferior-ess-r-mode 'emacs)
     (evil-set-initial-state 'magit-status 'emacs)
-    (evil-set-initial-state 'treemacs-mode 'emacs)
+    (evil-set-initial-state 'treemacs-mode 'normal)
     )
 
   (use-package evil-collection
@@ -169,6 +169,8 @@
   (progn
     (key-chord-mode 1)))
 
+(general-evil-setup)
+
 (defun aj/evil-insert-delete-back-word ()
   "Made specifically for insert state but works in other
                                 states. Deletes backwards until a space. Not a true vim word or
@@ -200,40 +202,39 @@
 ;;   :major-modes t
 ;;   :prefix-command 'evil-centaur-ess-prefix-command
 ;;   ;; :prefix-map 'evil-centaur-ess-prefix-map)
-
+;; :major-modes
 (evil-centaur-def
-  "/" 'swiper
-  ;; comments
-  "c" '(:wk "comment")
-  "ci" 'evilnc-comment-or-uncomment-lines
-  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-  "cc" 'evilnc-copy-and-comment-lines
-  "cp" 'evilnc-comment-or-uncomment-paragraphs
-  "cr" 'comment-or-uncomment-region
-  "cv" 'evilnc-toggle-invert-comment-line-by-line
-  ;; my personal functions
-  "a" '(:wk "atanas")
-  "a '" '(aj/iterm-focus :which-key "iterm")
-  "a?" '(aj/iterm-goto-filedir-or-home :which-key "iterm - go to dir")
-  "aw" '(aj/pandoc-wc :wk "pandoc wordcount buffer")
-  ;; buffer
-  "b" '(:wk "buffer")
-  "bd" 'kill-this-buffer
-  "br" 'revert-buffer
-  ;; projectile
-  "p" 'projectile-command-map
-  "q" 'delete-window
-  "g" '(:wk "git")
-  "gs" 'magit-status
-  ";" '(:wk "eval")
-  "; ;" 'eval-last-sexp
-  "y" 'counsel-yank-pop
-  "," 'ivy-switch-buffer)
+ "/" 'swiper
+ ;; comments
+ "c" '(:wk "comment")
+ "ci" 'evilnc-comment-or-uncomment-lines
+ "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+ "cc" 'evilnc-copy-and-comment-lines
+ "cp" 'evilnc-comment-or-uncomment-paragraphs
+ "cr" 'comment-or-uncomment-region
+ "cv" 'evilnc-toggle-invert-comment-line-by-line
+ ;; my personal functions
+ "a" '(:wk "atanas")
+ "a '" '(aj/iterm-focus :which-key "iterm")
+ "a?" '(aj/iterm-goto-filedir-or-home :which-key "iterm - go to dir")
+ "aw" '(aj/pandoc-wc :wk "pandoc wordcount buffer")
+ ;; buffer
+ "b" '(:wk "buffer")
+ "bd" 'kill-this-buffer
+ "br" 'revert-buffer
+ ;; projectile
+ "p" 'projectile-command-map
+ "q" 'delete-window
+ "g" '(:wk "git")
+ "gs" 'magit-status
+ ";" '(:wk "eval")
+ "; ;" 'eval-last-sexp
+ "y" 'counsel-yank-pop
+ "," 'ivy-switch-buffer)
 
-(general-evil-setup)
 
-(defvar my-leader-map (make-sparse-keymap)
-  "Keymap for \"leader key\" shortcuts.")
+;; (defvar my-leader-map (make-sparse-keymap)
+;; "Keymap for \"leader key\" shortcuts.")
 
 ;; (general-nmap
 ;;   :prefix "SPC"
