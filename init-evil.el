@@ -7,8 +7,7 @@
 
 ;; This file is not part of GNU Emacs.
 ;;
-;; Th   [ State ]: EDITED, shown value does not take effect until you set or save it.
-;; an redistribute it and/or
+;; This program is free software; you can redistribute it and/or
 ;; modify it under the terms of the GNU General Public License as
 ;; published by the Free Software Foundation; either version 2, or
 ;; (at your option) any later version.
@@ -63,93 +62,95 @@
     (evil-set-initial-state 'magit-status 'emacs)
     (evil-set-initial-state 'treemacs-mode 'emacs)
     )
-
-  (use-package evil-collection
-    :after evil
-    :ensure t
-    :config
-    (evil-collection-init)
-    )
-
-  (use-package evil-mc
-    :after evil
-    :commands (evil-mc-make-cursor-here
-               evil-mc-make-all-cursors
-               evil-mc-undo-all-cursors
-               evil-mc-pause-cursors
-               evil-mc-resume-cursors
-               evil-mc-make-and-goto-first-cursor
-               evil-mc-make-and-goto-last-cursor
-               evil-mc-make-cursor-move-next-line
-               evil-mc-make-cursor-move-prev-line
-               evil-mc-make-cursor-at-pos
-               evil-mc-has-cursors-p
-               evil-mc-make-and-goto-next-cursor
-               evil-mc-skip-and-goto-next-cursor
-               evil-mc-make-and-goto-prev-cursor
-               evil-mc-skip-and-goto-prev-cursor
-               evil-mc-make-and-goto-next-match
-               evil-mc-skip-and-goto-next-match
-               evil-mc-skip-and-goto-next-match
-               evil-mc-make-and-goto-prev-match
-               evil-mc-skip-and-goto-prev-match)
-    :init
-    (defvar evil-mc-key-map (make-sparse-keymap))
-    :config
-    (global-evil-mc-mode +1)
-    )
-
-  (use-package evil-multiedit
-    :after evil
-    :commands (evil-multiedit-match-all
-               evil-multiedit-match-and-next
-               evil-multiedit-match-and-prev
-               evil-multiedit-match-symbol-and-next
-               evil-multiedit-match-symbol-and-prev
-               evil-multiedit-toggle-or-restrict-region
-               evil-multiedit-next
-               evil-multiedit-prev
-               evil-multiedit-abort
-               evil-multiedit-ex-match)
-    :init
-    (defvar evil-multiedit-key-map (make-sparse-keymap))
-    )
-
-  (use-package evil-tutor)
-
-  (use-package evil-avy
-    :after evil
-    )
-
-  (use-package evil-smartparens
-    :after evil
-    :config
-    (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
-    )
-
-  (use-package evil-surround
-    :config
-    (global-evil-surround-mode 1)
-    )
-
-  (use-package general
-    :after evil
-    )
-
-  (use-package evil-commentary
-    :after evil
-    )
-
-  (use-package evil-nerd-commenter
-    :after evil)
   )
 
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init)
+  )
+
+(use-package evil-mc
+  :after evil
+  :commands (evil-mc-make-cursor-here
+             evil-mc-make-all-cursors
+             evil-mc-undo-all-cursors
+             evil-mc-pause-cursors
+             evil-mc-resume-cursors
+             evil-mc-make-and-goto-first-cursor
+             evil-mc-make-and-goto-last-cursor
+             evil-mc-make-cursor-move-next-line
+             evil-mc-make-cursor-move-prev-line
+             evil-mc-make-cursor-at-pos
+             evil-mc-has-cursors-p
+             evil-mc-make-and-goto-next-cursor
+             evil-mc-skip-and-goto-next-cursor
+             evil-mc-make-and-goto-prev-cursor
+             evil-mc-skip-and-goto-prev-cursor
+             evil-mc-make-and-goto-next-match
+             evil-mc-skip-and-goto-next-match
+             evil-mc-skip-and-goto-next-match
+             evil-mc-make-and-goto-prev-match
+             evil-mc-skip-and-goto-prev-match)
+  :init
+  (defvar evil-mc-key-map (make-sparse-keymap))
+  :config
+  (global-evil-mc-mode +1)
+  )
+
+(use-package evil-multiedit
+  :after evil
+  :commands (evil-multiedit-match-all
+             evil-multiedit-match-and-next
+             evil-multiedit-match-and-prev
+             evil-multiedit-match-symbol-and-next
+             evil-multiedit-match-symbol-and-prev
+             evil-multiedit-toggle-or-restrict-region
+             evil-multiedit-next
+             evil-multiedit-prev
+             evil-multiedit-abort
+             evil-multiedit-ex-match)
+  :init
+  (defvar evil-multiedit-key-map (make-sparse-keymap))
+  )
+
+(use-package evil-tutor)
+
+(use-package evil-avy
+  :after evil
+  )
+
+(use-package evil-smartparens
+  :after evil
+  :config
+  (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+  )
+
+(use-package evil-surround
+  :config
+  (global-evil-surround-mode 1)
+  )
+
+(use-package general
+  :after evil
+  )
+
+(use-package evil-commentary
+  :after evil
+  )
+
+(use-package evil-nerd-commenter
+  :after evil)
+
 (use-package evil-magit
+  :after evil
   :init (setq evil-want-keybinding nil))
 
 
 (use-package evil-goggles
   :after evil
+  :demand t
   :config (progn
             (evil-goggles-mode)
             (evil-goggles-use-diff-faces)))
@@ -173,21 +174,13 @@
 (general-evil-setup)
 
 (defun aj/evil-insert-delete-back-word ()
-  "Made specifically for insert state but works in other
-                                states. Deletes backwards until a space. Not a true vim word or
-                                WORD."
+  "Made specifically for insert state but works in other states. Deletes
+backwards until a space. Not a true vim word or WORD."
   (interactive)
   (delete-region
    (point)
    (save-excursion (skip-syntax-backward "^ ") (point))))
 
-;; FIXME the below is ot working
-;; ;; (general-define-key :keymaps 'evil-insert-state-map
-;; ;;   (general-chord "uu") 'aj/evil-insert-delete-back-word
-;;   )
-
-;; (key-chord-define evil-insert-state-map "uu" 'aj/evil-insert-delete-back-word)
-;; (general-define-key :keymaps 'evil-insert-state-map
 (general-define-key :states '(insert emacs normal)
   (general-chord "uu") 'aj/evil-insert-delete-back-word)
 
@@ -199,16 +192,7 @@
   :prefix-command 'evil-centaur-prefix-command
   :prefix-map 'evil-centaur-prefix-map)
 
-;; ;; evil-cent-ess-def
-;; (general-create-definer evil-centaur-ess-def
-;;   :states '(normal insert emacs)
-;;   :prefix "SPC"
-;;   :non-normal-prefix "M-SPC"
-;;   :key-maps 'ess-r-mode-map
-;;   :major-modes t
-;;   :prefix-command 'evil-centaur-ess-prefix-command
-;;   ;; :prefix-map 'evil-centaur-ess-prefix-map)
-;; :major-modes
+;; evil basic keymap
 (evil-centaur-def
   "/"   'swiper
   ;; comments
@@ -304,17 +288,11 @@
  "gk"    'ess-cent-switch-prev-gdev
  ;; R Markdown
  "rc"    'ess-cent-r-insert-chunk
- ;; "rr" 'ess-cent-rmd-rend
- ;; "rd" 'ess-cent-draft-rmd
  ;; Shiny
  "Sr"    'ess-cent-shiny-run-app
  )
 
-;; (evil-define-key 'normal 'global (kbd "<leader>s") 'save-buffer
-
-;; this configuration was inspired by this post
-;; gwww.reddit.com/r/emacs/comments/9vnfdk/generalel_for_existing_keymaps/
-
+;; markdown mode
 (general-define-key
  :keymaps 'markdown-mode-map
  :major-modes t
@@ -330,22 +308,13 @@
  "mc" '(:keymap markdown-mode-command-map :which-key "command")
  )
 
-
-;; (defvar my-leader-map (make-sparse-keymap)
-;; "Keymap for \"leader key\" shortcuts.")
-
-;; (general-nmap
-;; "s" 'save-buffer)
-
 ;; ** Evil idit
-
 
 ;; (general-define-key
 ;;  :states '(normal visual insert)
 ;;  :prefix "M"
 ;;  "d" 'evil-multiedit-match-and-next)
 ;; ;; Highlights all matches of the selection in the buffer.
-
 
 ;; (define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
 
@@ -382,9 +351,7 @@
 ;; ;; Ex command that allows you to invoke evil-multiedit with a regular expression, e.g.
 ;; (evil-ex-define-cmd "ie[dit]" 'evil-multiedit-ex-match)
 
-
 ;; (evil-set-initial-state 'flycheck-error-list-mode 'normal)
-
 
 (provide 'init-evil)
 

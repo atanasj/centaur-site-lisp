@@ -141,6 +141,7 @@
 ;; ===========================================================
 ;; IDE Functions
 ;; ===========================================================
+
 ;; Bring up empty R script and R console for quick calculations
 (defun ess-cent-R-scratch ()
   (interactive)
@@ -167,7 +168,6 @@
   (ess-eval-linewise
    "shiny::runApp(\".\")\n" "Running app" arg
    '("" (read-string "Arguments: " "recompile = TRUE"))))
-
 
 ;; Graphics device management ;;
 (defun ess-cent-new-gdev ()
@@ -219,7 +219,6 @@
   "setup R package in current working directory"
   (interactive)
   (ess-eval-linewise "devtools::setup()"))
-
 
 ;;======================================================================
 ;; (R) markdown mode
