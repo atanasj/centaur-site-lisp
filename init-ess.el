@@ -416,21 +416,6 @@
  "Sr" 'tide-shiny-run-app
  )
 
-;; this configuration was inspired by this post
-;; gwww.reddit.com/r/emacs/comments/9vnfdk/generalel_for_existing_keymaps/
-
-(general-define-key
- :keymaps 'markdown-mode-map
- :major-modes t
- :states '(normal insert emacs)
- :prefix "SPC"
- :non-normal-prefix "M-SPC"
- "m"    '(:ignore t :which-key "markdown")
- "ms"   '(:keymap markdown-mode-style-map :which-key "style")
- "mc"   '(:keymap markdown-mode-command-map :which-key "command")
- )
-
-
 ;; provide ess configuration
 (provide 'init-ess)
 

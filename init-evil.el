@@ -61,7 +61,7 @@
     (evil-set-initial-state 'diff-mode 'emacs)
     (evil-set-initial-state 'inferior-ess-r-mode 'emacs)
     (evil-set-initial-state 'magit-status 'emacs)
-    (evil-set-initial-state 'treemacs-mode 'normal)
+    (evil-set-initial-state 'treemacs-mode 'emacs)
     )
 
   (use-package evil-collection
@@ -204,33 +204,55 @@
 ;;   ;; :prefix-map 'evil-centaur-ess-prefix-map)
 ;; :major-modes
 (evil-centaur-def
- "/" 'swiper
- ;; comments
- "c" '(:wk "comment")
- "ci" 'evilnc-comment-or-uncomment-lines
- "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
- "cc" 'evilnc-copy-and-comment-lines
- "cp" 'evilnc-comment-or-uncomment-paragraphs
- "cr" 'comment-or-uncomment-region
- "cv" 'evilnc-toggle-invert-comment-line-by-line
- ;; my personal functions
- "a" '(:wk "atanas")
- "a '" '(aj/iterm-focus :which-key "iterm")
- "a?" '(aj/iterm-goto-filedir-or-home :which-key "iterm - go to dir")
- "aw" '(aj/pandoc-wc :wk "pandoc wordcount buffer")
- ;; buffer
- "b" '(:wk "buffer")
- "bd" 'kill-this-buffer
- "br" 'revert-buffer
- ;; projectile
- "p" 'projectile-command-map
- "q" 'delete-window
- "g" '(:wk "git")
- "gs" 'magit-status
- ";" '(:wk "eval")
- "; ;" 'eval-last-sexp
- "y" 'counsel-yank-pop
- "," 'ivy-switch-buffer)
+  "/"   'swiper
+  ;; comments
+  "c"   '(:wk "comment")
+  "ci"  'evilnc-comment-or-uncomment-lines
+  "cl"  'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc"  'evilnc-copy-and-comment-lines
+  "cp"  'evilnc-comment-or-uncomment-paragraphs
+  "cr"  'comment-or-uncomment-region
+  "cv"  'evilnc-toggle-invert-comment-line-by-line
+  ;; my personal functions
+  "a"   '(:wk "atanas")
+  "a'"  '(aj/iterm-focus :which-key "iterm")
+  "a?"  '(aj/iterm-goto-filedir-or-home :which-key "iterm - go to dir")
+  "aw"  '(aj/pandoc-wc :wk "pandoc wordcount buffer")
+  ;; buffer
+  "b"   '(:wk "buffer")
+  "bd"  'kill-this-buffer
+  "br"  'revert-buffer
+  ;; projectile
+  "p"   '(projectile-command-map :wk "projectile")
+  "q"   'delete-window
+  "g"   'magit-status
+  ";"   '(:wk "eval")
+  "; ;" 'eval-last-sexp
+  "; :" 'align-regexp
+  "; %" 'replace-regexp
+  "y"   'counsel-yank-pop
+  "."   'counsel-imenu
+  ","   'ivy-switch-buffer)
+
+
+
+;; this configuration was inspired by this post
+;; gwww.reddit.com/r/emacs/comments/9vnfdk/generalel_for_existing_keymaps/
+
+(general-define-key
+ :keymaps 'markdown-mode-map
+ :major-modes t
+ :states '(normal insert emacs)
+ :prefix "SPC"
+ :non-normal-prefix "M-SPC"
+ "b"  '(:ignore t :wk "bib")
+ "bc" 'ebib-insert-citation
+ "bb" 'ebib
+ "bz" 'aj/zotero-cayw
+ "m"  '(:ignore t :which-key "markdown")
+ "ms" '(:keymap markdown-mode-style-map :which-key "style")
+ "mc" '(:keymap markdown-mode-command-map :which-key "command")
+ )
 
 
 ;; (defvar my-leader-map (make-sparse-keymap)
