@@ -220,7 +220,7 @@ backwards until a space. Not a true vim word or WORD."
   "; ;" 'eval-last-sexp
   "; :" 'align-regexp
   "; %" 'replace-regexp
-  "p"   'counsel-yank-pop
+  "y"   'counsel-yank-pop
   "."   'counsel-imenu
   ","   'ivy-switch-buffer
   "s"   'save-buffer
