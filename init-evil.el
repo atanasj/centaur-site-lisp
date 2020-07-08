@@ -208,6 +208,7 @@ backwards until a space. Not a true vim word or WORD."
   "a'"  '(aj/iterm-focus :which-key "iterm")
   "a?"  '(aj/iterm-goto-filedir-or-home :which-key "iterm - go to dir")
   "aw"  '(aj/pandoc-wc :wk "pandoc wordcount buffer")
+  "ao"  'aj/open-in-external-app
   ;; buffer
   "b"   '(:wk "buffer")
   "bd"  'kill-this-buffer
@@ -215,7 +216,7 @@ backwards until a space. Not a true vim word or WORD."
   ;; projectile
   "p"   '(projectile-command-map :wk "projectile")
   "q"   'delete-window
-  "g"   'magit-status
+  "G"   'magit-status
   ";"   '(:wk "eval")
   "; ;" 'eval-last-sexp
   "; :" 'align-regexp
@@ -223,8 +224,8 @@ backwards until a space. Not a true vim word or WORD."
   "y"   'counsel-yank-pop
   "."   'counsel-imenu
   ","   'ivy-switch-buffer
-  "s"   'save-buffer
-  "o"   'ace-window
+  "S"   'save-buffer
+  "O"   'ace-window
   )
 
 ;; ===========================================================
@@ -291,6 +292,12 @@ backwards until a space. Not a true vim word or WORD."
  ;; Shiny
  "Sr"    'ess-cent-shiny-run-app
  )
+
+;; (general-define-key
+;;  :states '(insert emacs normal visual)
+;;  :keymaps ess-r-mode-map
+;;  :major-modes t
+;;  (general-chord "df") 'ess-view-inspect-df)
 
 ;; markdown mode
 (general-define-key

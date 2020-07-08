@@ -59,7 +59,7 @@
   (setq ess-use-flymake nil)
   ;; Stop R repl eval from blocking emacs.
   (setq ess-eval-visibly 'nowait)
-
+  (setq inferior-ess-r-program "/usr/local/bin/R")
   (setq ess-ask-for-ess-directory t
         ess-local-process-name "R"
         ansi-color-for-comint-mode 'filter
