@@ -37,17 +37,9 @@
   (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
   )
 
-;; Working but slow
-;; (use-package ein)
-
 ;; ===========================================================
 ;; Visual-Changes
 ;; ===========================================================
-
-;; Nyan Cat for fun
-;; (use-package nyan-mode
-;;   :init
-;;   (nyan-mode))
 
 ;; colorise colour references
 (use-package rainbow-mode
@@ -63,7 +55,6 @@
 (add-hook 'spss-mode-hook #'display-line-numbers-mode)
 (add-hook 'spss-mode-hook #'auto-fill-mode)
 
-
 ;; the hs-mode made things too stuttery in rmd mode
 (add-hook 'markdown-mode-hook #'hs-minor-mode)
 (add-hook 'text-mode-hook #'rainbow-delimiters-mode)
@@ -71,7 +62,6 @@
 
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 (add-to-list 'default-frame-alist '(fullscreen . fullheight))
-
 
 (with-eval-after-load 'dashboard
   (setq dashboard-banner-logo-title "\"If you can't explain it simply, you don't understand it well enough.\""
@@ -141,8 +131,6 @@
   "Return wordcount of current buffer using pandoc wordcount.lua"
   (interactive) (shell-command (concat "pandoc --lua-filter wordcount.lua " buffer-file-name)))
 ;; this might be problematic, as really I only want this for markdown docs
-;; (global-set-key "\C-cw" 'aj/pandoc-wc)
-
 
 ;; preview markdownf file in marked2.app
 (defun aj/markdown-preview-file ()
@@ -163,41 +151,6 @@
   (do-applescript "tell application \"Emacs\" to activate"))
 
 (global-set-key (kbd "C-s-y") 'aj/zotero-cayw)
-
-(defun aj/open-in-external-app (&optional @fname)
-  "Open the current file or dired marked files in external app.
-The app is chosen from your OS's preference.
-
-When called in emacs lisp, if @fname is given, open that.
-
-URL `http://ergoemacs.org/emacs/emacs_dired_open_file_in_ext_apps.html'
-Version 2019-11-04"
-  (interactive)
-  (let* (
-         ($file-list
-          (if @fname
-              (progn (list @fname))
-            (if (string-equal major-mode "dired-mode")
-                (dired-get-marked-files)
-              (list (buffer-file-name)))))
-         ($do-it-p (if (<= (length $file-list) 5)
-                       t
-                     (y-or-n-p "Open more than 5 files? "))))
-    (when $do-it-p
-      (cond
-       ((string-equal system-type "windows-nt")
-        (mapc
-         (lambda ($fpath)
-           (w32-shell-execute "open" $fpath)) $file-list))
-       ((string-equal system-type "darwin")
-        (mapc
-         (lambda ($fpath)
-           (shell-command
-            (concat "open " (shell-quote-argument $fpath))))  $file-list))
-       ((string-equal system-type "gnu/linux")
-        (mapc
-         (lambda ($fpath) (let ((process-connection-type nil))
-                       (start-process "" nil "xdg-open" $fpath))) $file-list))))))
 
 ;; ===========================================================
 ;; Keybindings
@@ -224,53 +177,16 @@ Version 2019-11-04"
 (with-eval-after-load 'company
   (define-key company-mode-map (kbd "C-M-s-/") 'company-files))
 
-;; set keys for Apple keyboard, for emacs in OS X
-;; (setq mac-command-modifier 'super ; make cmd key do Meta
-;;       mac-option-modifier 'meta) ; make opt key do Super
-
 ;; ===========================================================
 ;; Miscellaneous
 ;; ===========================================================
 
+(use-package flyspell-lazy
+  :config
+  (flyspell-lazy-mode 1))
+
 ;; stop asking for mc to confit multiple changes
 (setq mc/always-run-for-all t)
-
-;; ensure forge is loaded with magit
-;; (with-eval-after-load 'magit
-;;   (require 'forge)
-;;   )
-
-;; https://www.reddit.com/r/emacs/comments/bcpexy/magit_how_to_quickly_view_the_history_of_a_file/?utm_source=share&utm_medium=ios_app&utm_name=iossmf
-;; (add-hook 'magit-section-movement-hook 'magit-status-maybe-update-blob-buffer)
-
-;; (defun aj/magit-log-visit-changed-file ()
-;;   "Visit a changed file of revision under point in `magit-log-mode'.
-
-;; Uses `general-simulate-key', so `general-simulate-RET' will
-;; become defined after invocation."
-;;   (interactive)
-;;   (general-simulate-key "RET")
-;;   ;; visit the commit
-;;   (general-simulate-RET)
-;;   ;; move to first changed file in diff buffer
-;;   (setf (point) (point-min))
-;;   (search-forward "|" nil t)
-;;   ;; open the revision
-;;   (general-simulate-RET))
-
-;; (general-define-key
-;;  :keymaps '(magit-log-mode-map)
-;;  :states 'normal
-;;  "C-<return>" #'aj/magit-log-visit-changed-file)
-
-;; forge config
-;; (with-eval-after-load 'forge
-;;   ;; (add-to-list 'forge-alist '("api.github.com/graphql" forge-github-repository))
-;;   ;; this idea came from https://github.com/magit/forge/issues/140
-;;   ;; relevant forge files are forge-issue.el or forge-topic.el
-;;   ;; I could only get this working with add-to-list which tacks it onto the front
-;;   (add-to-list 'forge-topic-list-columns '("State" 6 t (:right-align t) state nil))
-;;   )
 
 ;; setup grip-mode
 (with-eval-after-load 'grip
@@ -321,7 +237,7 @@ Version 2019-11-04"
 ;; savehist was maxing cpu
 (with-eval-after-load 'savehist-mode
   (setq history-length 10)
-  (savehist-mode nil)
+  ;; (savehist-mode nil)
   )
 
 (with-eval-after-load 'org-roam-mode

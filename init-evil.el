@@ -60,7 +60,7 @@
     (evil-set-initial-state 'diff-mode 'emacs)
     (evil-set-initial-state 'inferior-ess-r-mode 'emacs)
     (evil-set-initial-state 'magit-status 'emacs)
-    (evil-set-initial-state 'treemacs-mode 'emacs)
+    (evil-set-initial-state 'treemacs-mode 'motion)
     )
   )
 
