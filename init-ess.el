@@ -53,6 +53,24 @@
   :init
   (require 'ess-site)
   :config
+  (setq display-buffer-alist
+        `(("*R Dired"
+           (display-buffer-reuse-window display-buffer-in-side-window)
+           (side . right)
+           (slot . -1)
+           (window-width . 0.33)
+           (reusable-frames . nil))
+          ("*R"
+           (display-buffer-reuse-window display-buffer-in-side-window)
+           (side . right)
+           (window-width . 0.5)
+           (reusable-frames . nil))
+          ("*Help"
+           (display-buffer-reuse-window display-buffer-at-bottom)
+           (side . left)
+           (slot . 1)
+           (window-width . 0.33)
+           (reusable-frames . nil))))
   ;; auto-width
   (setq ess-auto-width 'window)
   ;; let lsp manage lintr

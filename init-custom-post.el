@@ -182,8 +182,19 @@
 ;; ===========================================================
 
 (use-package flyspell-lazy
+  :after flyspell
   :config
   (flyspell-lazy-mode 1))
+
+;; (add-hook 'text-mode-hook
+;;           (lambda (flyspell-mode -1)))
+;; (add-hook 'outline-mode-hook
+;;           (lambda (flyspell-mode -1)))
+;; (add-hook 'prog-mode-hook
+;;           (lambda (flyspell-prog-mode -1)))
+
+;; (add-hook 'prog-mode-hook #'wucuo-start)
+;; (add-hook 'text-mode-hook #'wucuo-start)
 
 ;; stop asking for mc to confit multiple changes
 (setq mc/always-run-for-all t)
