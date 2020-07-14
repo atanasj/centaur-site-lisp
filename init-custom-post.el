@@ -246,9 +246,9 @@
   )
 
 ;; savehist was maxing cpu
-(with-eval-after-load 'savehist-mode
+(with-eval-after-load 'savehist
   (setq history-length 10)
-  ;; (savehist-mode nil)
+  (savehist-mode -1)
   )
 
 (with-eval-after-load 'org-roam-mode
