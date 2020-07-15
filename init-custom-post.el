@@ -248,12 +248,10 @@
 ;; savehist was maxing cpu
 (with-eval-after-load 'savehist
   (setq history-length 10)
-  (savehist-mode -1)
   )
 
-(with-eval-after-load 'org-roam-mode
-  (remove-hook 'after-init-hook 'org-roam-mode-hook t)
-  )
+(remove-hook 'after-init-hook #'savehist-mode)
+(remove-hook 'after-init-hook #'org-roam-mode)
 
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<return>") nil)
